@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Profile - Axilex CMS</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-header" style="justify-content: space-between;">
+                <div><i class="fa-solid fa-bolt" style="margin-right: 0.5rem;"></i> AXILEX</div>
+                <button id="close-sidebar-btn" style="background:none; border:none; color:white; font-size:1.25rem; cursor:pointer;" class="mobile-only"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="/dashboard" class="sidebar-link">
+                    <i class="fa-solid fa-chart-line"></i> Dashboard
+                </a>
+                <a href="/electricians" class="sidebar-link">
+                    <i class="fa-solid fa-users"></i> Electricians
+                </a>
+                <a href="/jobs" class="sidebar-link">
+                    <i class="fa-solid fa-briefcase"></i> Jobs
+                </a>
+                <a href="/tasks" class="sidebar-link">
+                    <i class="fa-solid fa-list-check"></i> Tasks
+                </a>
+                <a href="/materials" class="sidebar-link">
+                    <i class="fa-solid fa-boxes-stacked"></i> Materials
+                </a>
+                <a href="/reporter" class="sidebar-link">
+                    <i class="fa-solid fa-file-contract"></i> Reports
+                </a>
+                <a href="/profile" class="sidebar-link active">
+                    <i class="fa-solid fa-user-gear"></i> Profile
+                </a>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <header class="topbar">
+                <div class="flex items-center gap-2">
+                    <button id="mobile-menu-btn" class="btn btn-outline" style="border: none; padding: 0.5rem;">
+                        <i class="fa-solid fa-bars" style="font-size: 1.25rem;"></i>
+                    </button>
+                    <h2 style="margin: 0; font-size: 1.25rem;">Profile Settings</h2>
+                </div>
+                <div class="topbar-right">
+                    <div class="user-profile">
+                        <img src="https://ui-avatars.com/api/?name=Admin+User&background=DBEAFE&color=1E3A8A" alt="Profile" style="width: 36px; height: 36px; border-radius: 50%;">
+                        <span>Admin User</span>
+                        <i class="fa-solid fa-chevron-down" style="font-size: 0.75rem; color: var(--text-light);"></i>
+                    </div>
+                </div>
+            </header>
+            <div class="content-area">
+                <div class="card" style="max-width: 600px; margin: 0 auto;">
+                    <div class="flex items-center gap-4 mb-4 pb-4" style="border-bottom: 1px solid var(--mid-grey);">
+                        <img src="https://ui-avatars.com/api/?name=Admin+User&background=DBEAFE&color=1E3A8A&size=100" alt="Profile" style="width: 100px; height: 100px; border-radius: 50%;">
+                        <div>
+                            <h2 style="margin-bottom: 0.25rem;">Admin User</h2>
+                            <p style="color: var(--text-light); margin-bottom: 0.5rem;">System Administrator</p>
+                            <button class="btn btn-outline" style="padding: 0.25rem 0.75rem; font-size: 0.75rem;">Change Photo</button>
+                        </div>
+                    </div>
+
+                    <form id="profileForm">
+                        <div class="form-group">
+                            <label class="form-label" for="adminName">Full Name</label>
+                            <input type="text" id="adminName" class="form-control" value="Admin User" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="adminEmail">Email Address</label>
+                            <input type="email" id="adminEmail" class="form-control" value="admin@axilex.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="adminPhone">Phone Number</label>
+                            <input type="tel" id="adminPhone" class="form-control" value="+1 (555) 999-8888">
+                        </div>
+
+                        <div class="flex justify-between items-center mt-4 pt-4" style="border-top: 1px solid var(--mid-grey);">
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                            <a href="/login" class="btn btn-danger">
+                                <i class="fa-solid fa-arrow-right-from-bracket" style="margin-right: 0.5rem;"></i> Logout
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/static/js/script.js"></script>
+</body>
+</html>

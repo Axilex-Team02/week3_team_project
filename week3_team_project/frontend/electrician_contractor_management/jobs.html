@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jobs Management - Axilex CMS</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-header" style="justify-content: space-between;">
+                <div><i class="fa-solid fa-bolt" style="margin-right: 0.5rem;"></i> AXILEX</div>
+                <button id="close-sidebar-btn" style="background:none; border:none; color:white; font-size:1.25rem; cursor:pointer;" class="mobile-only"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="sidebar-link">
+                    <i class="fa-solid fa-chart-line"></i> Dashboard
+                </a>
+                <a href="electricians.html" class="sidebar-link">
+                    <i class="fa-solid fa-users"></i> Electricians
+                </a>
+                <a href="jobs.html" class="sidebar-link active">
+                    <i class="fa-solid fa-briefcase"></i> Jobs
+                </a>
+                <a href="tasks.html" class="sidebar-link">
+                    <i class="fa-solid fa-list-check"></i> Tasks
+                </a>
+                <a href="materials.html" class="sidebar-link">
+                    <i class="fa-solid fa-boxes-stacked"></i> Materials
+                </a>
+                <a href="reporter.html" class="sidebar-link">
+                    <i class="fa-solid fa-file-contract"></i> Reports
+                </a>
+                <a href="profile.html" class="sidebar-link">
+                    <i class="fa-solid fa-user-gear"></i> Profile
+                </a>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <header class="topbar">
+                <div class="flex items-center gap-2">
+                    <button id="mobile-menu-btn" class="btn btn-outline" style="border: none; padding: 0.5rem;">
+                        <i class="fa-solid fa-bars" style="font-size: 1.25rem;"></i>
+                    </button>
+                    <h2 style="margin: 0; font-size: 1.25rem;">Job Management</h2>
+                </div>
+                <div class="topbar-right">
+                    <div class="user-profile">
+                        <img src="https://ui-avatars.com/api/?name=Admin+User&background=DBEAFE&color=1E3A8A" alt="Profile" style="width: 36px; height: 36px; border-radius: 50%;">
+                        <span>Admin User</span>
+                        <i class="fa-solid fa-chevron-down" style="font-size: 0.75rem; color: var(--text-light);"></i>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-area">
+                <div class="flex justify-between items-center mb-4">
+                    <div class="flex gap-1" style="width: 400px;">
+                        <input type="text" class="form-control" placeholder="Search jobs...">
+                        <select class="form-control form-select" style="width: 150px;">
+                            <option value="">All Statuses</option>
+                            <option value="pending">Pending</option>
+                            <option value="in_progress">In Progress</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+                    <button id="createJobBtn" class="btn btn-primary"><i class="fa-solid fa-plus" style="margin-right: 0.5rem;"></i> Create Job</button>
+                </div>
+
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Job Title</th>
+                                <th>Location</th>
+                                <th>Assigned To</th>
+                                <th>Deadline</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="font-weight: 500;">Main Panel Upgrade</td>
+                                <td style="color: var(--text-light);">123 Tech Blvd, Suite 200</td>
+                                <td>
+                                    <div class="flex items-center gap-1">
+                                        <img src="https://ui-avatars.com/api/?name=John+Doe&background=random" style="width: 24px; height: 24px; border-radius: 50%;">
+                                        <span style="font-size: 0.875rem;">Bhoomika</span>
+                                    </div>
+                                </td>
+                                <td>Oct 24, 2026</td>
+                                <td><span class="badge badge-success">Completed</span></td>
+                                <td>
+                                    <button class="btn btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">View</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: 500;">Wiring Installation</td>
+                                <td style="color: var(--text-light);">456 Industrial Way</td>
+                                <td>
+                                    <div class="flex items-center gap-1">
+                                        <img src="https://ui-avatars.com/api/?name=Jane+Smith&background=random" style="width: 24px; height: 24px; border-radius: 50%;">
+                                        <span style="font-size: 0.875rem;">Bhuvana</span>
+                                    </div>
+                                </td>
+                                <td>Oct 28, 2026</td>
+                                <td><span class="badge badge-warning">In Progress</span></td>
+                                <td>
+                                    <button class="btn btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">View</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: 500;">Routine Fixture Check</td>
+                                <td style="color: var(--text-light);">789 Residential Ln</td>
+                                <td>
+                                    <span style="font-size: 0.875rem; color: var(--text-light); font-style: italic;">Unassigned</span>
+                                </td>
+                                <td>Nov 02, 2026</td>
+                                <td><span class="badge badge-danger">Pending</span></td>
+                                <td>
+                                    <button class="btn btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">View</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="createJobModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Create New Job</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <form id="createJobForm">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="form-label" for="jobTitle">Job Title</label>
+                        <input type="text" id="jobTitle" class="form-control" placeholder="e.g. Panel Upgrade" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="jobLocation">Location</label>
+                        <input type="text" id="jobLocation" class="form-control" placeholder="e.g. 123 Main St" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="jobAssignee">Assign To</label>
+                        <select id="jobAssignee" class="form-control form-select">
+                            <option value="Unassigned">Unassigned</option>
+                            <option value="Bhoomika">Bhoomika</option>
+                            <option value="Bhuvana">Bhuvana</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="jobDeadline">Deadline</label>
+                        <input type="date" id="jobDeadline" class="form-control" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline cls-btn close-modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create Job</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

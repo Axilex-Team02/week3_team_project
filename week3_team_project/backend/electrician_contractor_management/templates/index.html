@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Axilex - Electrician Contractor Management System</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <header class="public-header">
+        <div class="container">
+            <a href="/" class="logo">
+                <i class="fa-solid fa-bolt"></i>
+                AXILEX
+            </a>
+            <nav class="flex gap-2">
+                <a href="/login" class="btn btn-outline">Log In</a>
+                <a href="/register" class="btn btn-primary">Sign Up</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Electrician Contractor Management System</h1>
+                <p>Streamline your operations. Manage electricians, track jobs, monitor tasks, and oversee materials—all
+                    from one clean, intuitive interface.</p>
+                <div class="flex flex-col items-center gap-2 mt-4"
+                    style="flex-direction: row; justify-content: center;">
+                    <a href="/register" class="btn btn-primary"
+                        style="padding: 0.75rem 2rem; font-size: 1.1rem;">Get Started</a>
+                    <a href="/login" class="btn btn-outline"
+                        style="padding: 0.75rem 2rem; font-size: 1.1rem; border-color: white; color: white;">Log In</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="container">
+                <h2 style="text-align: center; color: var(--primary-blue); font-size: 2rem;">Powerful Features</h2>
+                <div class="features-grid">
+                    <div class="card feature-card">
+                        <i class="fa-solid fa-users feature-icon"></i>
+                        <h3>Electrician Management</h3>
+                        <p class="mt-1" style="color: var(--text-light)">Easily add, edit, and categorize your
+                            electricians in a centralized database.</p>
+                    </div>
+                    <div class="card feature-card">
+                        <i class="fa-solid fa-briefcase feature-icon"></i>
+                        <h3>Job & Task Tracking</h3>
+                        <p class="mt-1" style="color: var(--text-light)">Create jobs, assign electricians, set
+                            deadlines, and monitor real-time progress.</p>
+                    </div>
+                    <div class="card feature-card">
+                        <i class="fa-solid fa-boxes-stacked feature-icon"></i>
+                        <h3>Material Inventory</h3>
+                        <p class="mt-1" style="color: var(--text-light)">Keep track of material usage, manage stock
+                            quantities, and reduce wastage.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer style="background-color: var(--primary-blue); color: white; padding: 2rem 0; text-align: center;">
+        <div class="container">
+            <p>&copy; 2026 AXILEX PVT LTD. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/static/js/script.js"></script>
+</body>
+
+</html>

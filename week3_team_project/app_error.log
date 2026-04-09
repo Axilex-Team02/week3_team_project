@@ -1,0 +1,41 @@
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 615-769-649
+ERROR:root:Error during registration
+Traceback (most recent call last):
+  File "e:\week2_team_project\backend\electrician_contractor_management\app.py", line 34, in register
+    conn.execute('INSERT INTO Users (username, email, password, phone, role) VALUES (?, ?, ?, ?, ?)',
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                 (username, email, hashed_pw, phone, role))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: Users
+INFO:werkzeug:127.0.0.1 - - [28/Mar/2026 22:08:04] "[35m[1mPOST /register HTTP/1.1[0m" 500 -
+INFO:werkzeug: * Detected change in 'e:\\week2_team_project\\backend\\electrician_contractor_management\\app.py', reloading
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 615-769-649
+ERROR:root:Database error during registration
+Traceback (most recent call last):
+  File "e:\week2_team_project\backend\electrician_contractor_management\app.py", line 35, in register
+    conn.execute('INSERT INTO Users (username, email, password, phone, role) VALUES (?, ?, ?, ?, ?)',
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                 (username, email, hashed_pw, phone, role))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: Users
+INFO:werkzeug:127.0.0.1 - - [28/Mar/2026 22:08:56] "[35m[1mPOST /register HTTP/1.1[0m" 500 -
+ERROR:root:Database error during registration
+Traceback (most recent call last):
+  File "e:\week2_team_project\backend\electrician_contractor_management\app.py", line 35, in register
+    conn.execute('INSERT INTO Users (username, email, password, phone, role) VALUES (?, ?, ?, ?, ?)',
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                 (username, email, hashed_pw, phone, role))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: Users
+INFO:werkzeug:127.0.0.1 - - [28/Mar/2026 22:09:58] "[35m[1mPOST /register HTTP/1.1[0m" 500 -
+INFO:werkzeug: * Detected change in 'e:\\week2_team_project\\backend\\electrician_contractor_management\\app.py', reloading
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 615-769-649
+INFO:werkzeug: * Detected change in 'e:\\week2_team_project\\backend\\electrician_contractor_management\\database_setup.py', reloading
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 615-769-649
+INFO:werkzeug:127.0.0.1 - - [28/Mar/2026 22:11:28] "[32mPOST /register HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [28/Mar/2026 22:11:43] "[32mPOST /login HTTP/1.1[0m" 302 -
+INFO:werkzeug: * Detected change in 'e:\\week2_team_project\\backend\\electrician_contractor_management\\app.py', reloading
