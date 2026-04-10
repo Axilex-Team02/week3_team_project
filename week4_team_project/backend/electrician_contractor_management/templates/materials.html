@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materials Inventory - Axilex CMS</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-header" style="justify-content: space-between;">
+                <div><i class="fa-solid fa-bolt" style="margin-right: 0.5rem;"></i> AXILEX</div>
+                <button id="close-sidebar-btn" style="background:none; border:none; color:white; font-size:1.25rem; cursor:pointer;" class="mobile-only"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="/dashboard" class="sidebar-link">
+                    <i class="fa-solid fa-chart-line"></i> Dashboard
+                </a>
+                <a href="/electricians" class="sidebar-link">
+                    <i class="fa-solid fa-users"></i> Electricians
+                </a>
+                <a href="/jobs" class="sidebar-link">
+                    <i class="fa-solid fa-briefcase"></i> Jobs
+                </a>
+                <a href="/tasks" class="sidebar-link">
+                    <i class="fa-solid fa-list-check"></i> Tasks
+                </a>
+                <a href="/materials" class="sidebar-link active">
+                    <i class="fa-solid fa-boxes-stacked"></i> Materials
+                </a>
+                <a href="/reporter" class="sidebar-link">
+                    <i class="fa-solid fa-file-contract"></i> Reports
+                </a>
+                <a href="/profile" class="sidebar-link">
+                    <i class="fa-solid fa-user-gear"></i> Profile
+                </a>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <header class="topbar">
+                <div class="flex items-center gap-2">
+                    <button id="mobile-menu-btn" class="btn btn-outline" style="border: none; padding: 0.5rem;">
+                        <i class="fa-solid fa-bars" style="font-size: 1.25rem;"></i>
+                    </button>
+                    <h2 style="margin: 0; font-size: 1.25rem;">Material Inventory</h2>
+                </div>
+                <div class="topbar-right">
+                    <div class="notification-wrapper">
+                        <button id="notification-btn" class="btn btn-outline" style="border: none; position: relative; padding: 0.5rem;">
+                            <i class="fa-solid fa-bell" style="font-size: 1.25rem;"></i>
+                            <span id="notification-count" class="notification-badge" style="display: none;">0</span>
+                        </button>
+                        <div id="notification-dropdown" class="notification-dropdown">
+                            <div class="notification-header">
+                                <h4 style="margin: 0;">Notifications</h4>
+                                <button class="btn btn-outline" style="font-size: 0.75rem; border: none;">Clear All</button>
+                            </div>
+                            <div id="notification-list" class="notification-list">
+                                <!-- Notifications will be injected here -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="user-profile">
+                        <img src="https://ui-avatars.com/api/?name=Admin+User&background=DBEAFE&color=1E3A8A" alt="Profile" style="width: 36px; height: 36px; border-radius: 50%;">
+                        <span>{{ session.username if session.username else 'Admin' }}</span>
+                        <i class="fa-solid fa-chevron-down" style="font-size: 0.75rem; color: var(--text-light);"></i>
+                    </div>
+                </div>
+            </header>
+            <div class="content-area">
+                <div class="filter-bar">
+                    <form action="/materials" method="GET" class="flex gap-2" style="flex: 1;">
+                        <div class="search-input-wrapper">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" name="q" class="form-control" placeholder="Search materials..." value="{{ request.args.get('q', '') }}">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </form>
+                    <button id="addMaterialBtn" class="btn btn-primary"><i class="fa-solid fa-plus" style="margin-right: 0.5rem;"></i> Add Material</button>
+                </div>
+
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Material Name</th>
+                                <th>Current Quantity</th>
+                                <th>Unit</th>
+                                <th>Usage Tracking (Last 7 Days)</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for material in materials %}
+                            <tr>
+                                <td style="font-weight: 500;">{{ material.name }}</td>
+                                <td><span class="badge badge-{{ 'success' if material.quantity > 10 else 'warning' if material.quantity > 0 else 'danger' }}">{{ material.quantity }}</span></td>
+                                <td style="color: var(--text-light);">{{ material.unit }}</td>
+                                <td style="color: var(--text-light); font-size: 0.875rem;">{{ material.last_usage or 'No recent usage' }}</td>
+                                <td>
+                                    <button class="btn btn-outline use-material-btn" 
+                                            data-id="{{ material.id }}" 
+                                            data-name="{{ material.name }}"
+                                            data-unit="{{ material.unit }}"
+                                            data-qty="{{ material.quantity }}"
+                                            style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">Log Usage</button>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="5" class="text-center">No materials found.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+    </div>
+
+    <!-- Add Material Modal -->
+    <!-- Add Material Modal -->
+    <div class="modal" id="addMaterialModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Add New Material</h2>
+                <button class="close-modal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="addMaterialForm" method="POST" action="/materials">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="form-label">Material Name</label>
+                        <input type="text" id="matName" name="name" class="form-control" required placeholder="e.g. Copper Wire (12 AWG)">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Quantity</label>
+                        <input type="number" id="matQty" name="quantity" class="form-control" required placeholder="0" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Unit</label>
+                        <input type="text" id="matUnit" name="unit" class="form-control" placeholder="e.g. Feet, Pieces, Rolls" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline close-modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Material</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Log Usage Modal -->
+    <div id="logUsageModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Log Material Usage</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <form id="logUsageForm" method="POST">
+                <div class="modal-body">
+                    <p id="usageText" style="margin-bottom: 1rem; color: var(--text-dark);"></p>
+                    <div class="form-group">
+                        <label class="form-label">Quantity Used</label>
+                        <input type="number" name="usage" id="usageQty" class="form-control" required min="1">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline cls-btn close-modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Confirm Usage</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/static/js/script.js"></script>
+</body>
+</html>

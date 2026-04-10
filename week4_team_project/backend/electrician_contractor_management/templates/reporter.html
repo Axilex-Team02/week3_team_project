@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports - Axilex CMS</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-header" style="justify-content: space-between;">
+                <div><i class="fa-solid fa-bolt" style="margin-right: 0.5rem;"></i> AXILEX</div>
+                <button id="close-sidebar-btn" style="background:none; border:none; color:white; font-size:1.25rem; cursor:pointer;" class="mobile-only"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="/dashboard" class="sidebar-link">
+                    <i class="fa-solid fa-chart-line"></i> Dashboard
+                </a>
+                <a href="/electricians" class="sidebar-link">
+                    <i class="fa-solid fa-users"></i> Electricians
+                </a>
+                <a href="/jobs" class="sidebar-link">
+                    <i class="fa-solid fa-briefcase"></i> Jobs
+                </a>
+                <a href="/tasks" class="sidebar-link">
+                    <i class="fa-solid fa-list-check"></i> Tasks
+                </a>
+                <a href="/materials" class="sidebar-link">
+                    <i class="fa-solid fa-boxes-stacked"></i> Materials
+                </a>
+                <a href="/reporter" class="sidebar-link active">
+                    <i class="fa-solid fa-file-contract"></i> Reports
+                </a>
+                <a href="/profile" class="sidebar-link">
+                    <i class="fa-solid fa-user-gear"></i> Profile
+                </a>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <header class="topbar">
+                <div class="flex items-center gap-2">
+                    <button id="mobile-menu-btn" class="btn btn-outline" style="border: none; padding: 0.5rem;">
+                        <i class="fa-solid fa-bars" style="font-size: 1.25rem;"></i>
+                    </button>
+                    <h2 style="margin: 0; font-size: 1.25rem;">Analytics & Reports</h2>
+                </div>
+                <div class="topbar-right">
+                    <div class="notification-wrapper">
+                        <button id="notification-btn" class="btn btn-outline" style="border: none; position: relative; padding: 0.5rem;">
+                            <i class="fa-solid fa-bell" style="font-size: 1.25rem;"></i>
+                            <span id="notification-count" class="notification-badge" style="display: none;">0</span>
+                        </button>
+                        <div id="notification-dropdown" class="notification-dropdown">
+                            <div class="notification-header">
+                                <h4 style="margin: 0;">Notifications</h4>
+                                <button class="btn btn-outline" style="font-size: 0.75rem; border: none;">Clear All</button>
+                            </div>
+                            <div id="notification-list" class="notification-list">
+                                <!-- Notifications will be injected here -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="user-profile">
+                        <img src="https://ui-avatars.com/api/?name=Admin+User&background=DBEAFE&color=1E3A8A" alt="Profile" style="width: 36px; height: 36px; border-radius: 50%;">
+                        <span>{{ session.username if session.username else 'Admin' }}</span>
+                        <i class="fa-solid fa-chevron-down" style="font-size: 0.75rem; color: var(--text-light);"></i>
+                    </div>
+                </div>
+            </header>
+            <div class="content-area">
+                <div class="grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;">
+                    <div class="card" style="display: flex; flex-direction: column; height: 100%;">
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <h3 style="margin: 0;">Daily Progress</h3>
+                                <p style="font-size: 0.875rem; color: var(--text-light);">Tasks completed today</p>
+                            </div>
+                            <div class="summary-info"><p id="daily-completion-count" style="font-size: 2rem; color: var(--success);">0</p></div>
+                        </div>
+                        <div style="flex: 1; min-height: 200px; display: flex; align-items: center; justify-content: center; background: var(--light-grey); border-radius: 12px; margin-bottom: 1rem;">
+                            <i class="fa-solid fa-calendar-check" style="font-size: 4rem; color: var(--mid-grey);"></i>
+                        </div>
+                        <button class="btn btn-primary generate-pdf-btn" style="width: 100%;"><i class="fa-solid fa-file-export" style="margin-right: 0.5rem;"></i> Export Report</button>
+                    </div>
+
+                    <div class="card" style="display: flex; flex-direction: column; height: 100%;">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 style="margin: 0;">Task Distribution</h3>
+                            <div class="summary-icon green" style="width: 36px; height: 36px; font-size: 1rem;"><i class="fa-solid fa-chart-pie"></i></div>
+                        </div>
+                        <div style="flex: 1; min-height: 200px;">
+                            <canvas id="completionChart"></canvas>
+                        </div>
+                        <button class="btn btn-outline generate-pdf-btn" style="width: 100%; margin-top: 1rem;"><i class="fa-solid fa-print"></i> Print Analytics</button>
+                    </div>
+
+                    <div class="card" style="display: flex; flex-direction: column; height: 100%;">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 style="margin: 0;">Worker Productivity</h3>
+                            <div class="summary-icon yellow" style="width: 36px; height: 36px; font-size: 1rem;"><i class="fa-solid fa-helmet-safety"></i></div>
+                        </div>
+                        <div style="flex: 1; min-height: 200px;">
+                            <canvas id="activityChart"></canvas>
+                        </div>
+                        <button class="btn btn-outline generate-pdf-btn" style="width: 100%; margin-top: 1rem;"><i class="fa-solid fa-print"></i> Print Details</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/static/js/script.js"></script>
+</body>
+</html>
