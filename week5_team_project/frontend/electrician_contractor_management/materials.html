@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materials Inventory - Axilex CMS</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-header" style="justify-content: space-between;">
+                <div><i class="fa-solid fa-bolt" style="margin-right: 0.5rem;"></i> AXILEX</div>
+                <button id="close-sidebar-btn" style="background:none; border:none; color:white; font-size:1.25rem; cursor:pointer;" class="mobile-only"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="sidebar-link">
+                    <i class="fa-solid fa-chart-line"></i> Dashboard
+                </a>
+                <a href="electricians.html" class="sidebar-link">
+                    <i class="fa-solid fa-users"></i> Electricians
+                </a>
+                <a href="jobs.html" class="sidebar-link">
+                    <i class="fa-solid fa-briefcase"></i> Jobs
+                </a>
+                <a href="tasks.html" class="sidebar-link">
+                    <i class="fa-solid fa-list-check"></i> Tasks
+                </a>
+                <a href="materials.html" class="sidebar-link active">
+                    <i class="fa-solid fa-boxes-stacked"></i> Materials
+                </a>
+                <a href="reporter.html" class="sidebar-link">
+                    <i class="fa-solid fa-file-contract"></i> Reports
+                </a>
+                <a href="profile.html" class="sidebar-link">
+                    <i class="fa-solid fa-user-gear"></i> Profile
+                </a>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <header class="topbar">
+                <div class="flex items-center gap-2">
+                    <button id="mobile-menu-btn" class="btn btn-outline" style="border: none; padding: 0.5rem;">
+                        <i class="fa-solid fa-bars" style="font-size: 1.25rem;"></i>
+                    </button>
+                    <h2 style="margin: 0; font-size: 1.25rem;">Material Inventory</h2>
+                </div>
+                <div class="topbar-right">
+                    <div class="user-profile">
+                        <img src="https://ui-avatars.com/api/?name=Admin+User&background=DBEAFE&color=1E3A8A" alt="Profile" style="width: 36px; height: 36px; border-radius: 50%;">
+                        <span>Admin User</span>
+                        <i class="fa-solid fa-chevron-down" style="font-size: 0.75rem; color: var(--text-light);"></i>
+                    </div>
+                </div>
+            </header>
+            <div class="content-area">
+                <div class="flex justify-between items-center mb-4">
+                    <div style="width: 300px;">
+                        <input type="text" class="form-control" placeholder="Search materials...">
+                    </div>
+                    <button id="addMaterialBtn" class="btn btn-primary"><i class="fa-solid fa-plus" style="margin-right: 0.5rem;"></i> Add Material</button>
+                </div>
+
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Material Name</th>
+                                <th>Current Quantity</th>
+                                <th>Unit</th>
+                                <th>Usage Tracking (Last 7 Days)</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="font-weight: 500;">Copper Wire (12 AWG)</td>
+                                <td><span class="badge badge-success">4,500</span></td>
+                                <td style="color: var(--text-light);">Feet</td>
+                                <td style="color: var(--danger); font-size: 0.875rem;"><i class="fa-solid fa-arrow-down" style="margin-right: 0.25rem;"></i> 250 Ft Used</td>
+                                <td>
+                                    <button class="btn btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">Log Usage</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: 500;">LED Panel Fixture</td>
+                                <td><span class="badge badge-warning">15</span></td>
+                                <td style="color: var(--text-light);">Pieces</td>
+                                <td style="color: var(--danger); font-size: 0.875rem;"><i class="fa-solid fa-arrow-down" style="margin-right: 0.25rem;"></i> 10 Pcs Used</td>
+                                <td>
+                                    <button class="btn btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">Log Usage</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: 500;">Electrical Tape</td>
+                                <td><span class="badge badge-success">120</span></td>
+                                <td style="color: var(--text-light);">Rolls</td>
+                                <td style="color: var(--text-light); font-size: 0.875rem;">No recent usage</td>
+                                <td>
+                                    <button class="btn btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">Log Usage</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: 500;">Conduit Piping (0.75")</td>
+                                <td><span class="badge badge-danger">Low Stock (5)</span></td>
+                                <td style="color: var(--text-light);">Pieces</td>
+                                <td style="color: var(--danger); font-size: 0.875rem;"><i class="fa-solid fa-arrow-down" style="margin-right: 0.25rem;"></i> 45 Pcs Used</td>
+                                <td>
+                                    <button class="btn btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">Log Usage</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+    </div>
+
+    <!-- Add Material Modal -->
+    <div class="modal" id="addMaterialModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Material</h2>
+                <button class="close-modal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="addMaterialForm">
+                <div class="form-group">
+                    <label class="form-label">Material Name</label>
+                    <input type="text" id="matName" class="form-control" required placeholder="e.g. Copper Wire (12 AWG)">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Quantity</label>
+                    <input type="number" id="matQty" class="form-control" required placeholder="0" min="0">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Unit</label>
+                    <input type="text" id="matUnit" class="form-control" placeholder="e.g. Feet, Pieces, Rolls" required>
+                </div>
+                <div style="margin-top: 1.5rem; display: flex; justify-content: flex-end; gap: 1rem;">
+                    <button type="button" class="btn btn-outline" onclick="document.getElementById('addMaterialModal').classList.remove('show')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Material</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

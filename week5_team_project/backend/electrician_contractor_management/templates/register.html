@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Electrician Management</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="auth-container" style="padding: 2rem 1rem;">
+        <div class="card auth-card" style="max-width: 500px;">
+            <div class="auth-header">
+                <a href="/" class="logo justify-center mb-2" style="font-size: 1.5rem; text-align: center; font-weight: 700;">
+                    Electrician Contractor Management System
+                </a>
+                <h2>Create an Account</h2>
+                <p style="color: var(--text-light)">Join the contractor management system</p>
+            </div>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="flash-alert flash-{{ category }}">
+                    {{ message }}
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+            
+            <form action="{{ url_for('register') }}" method="POST">
+                <div class="form-group">
+                    <label class="form-label" for="fullName">Full Name</label>
+                    <input type="text" id="fullName" name="username" class="form-control" placeholder="Bhoomika" required>
+                </div>
+
+                <div class="flex gap-2">
+                    <div class="form-group" style="flex: 1;">
+                        <label class="form-label" for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" class="form-control" placeholder="+1 (555) 000-0000" required>
+                    </div>
+                    
+                    <div class="form-group" style="flex: 1;">
+                        <label class="form-label" for="role">Role</label>
+                        <select id="role" name="role" class="form-control form-select" required>
+                            <option value="" disabled selected>Select Role</option>
+                            <option value="admin">Administrator</option>
+                            <option value="electrician">Electrician</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="email">Email Address</label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="bhoomi3109@gmail.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Create a strong password" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary mt-2" style="width: 100%; padding: 0.75rem;">Sign Up</button>
+            </form>
+            
+            <div class="auth-footer">
+                Already have an account? <a href="/login" style="font-weight: 600;">Log in</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
