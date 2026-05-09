@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payments - Electrician Management</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-header" style="justify-content: space-between;">
+                <div style="font-size: 0.9rem; font-weight: 700; line-height: 1.2;">AXILEX PVT LTD <br><small style="font-weight: 400; opacity: 0.8;">Contractor Management</small></div>
+                <button id="close-sidebar-btn" style="background:none; border:none; color:white; font-size:1.25rem; cursor:pointer;" class="mobile-only"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="/dashboard" class="sidebar-link">
+                    <i class="fa-solid fa-chart-line"></i> Dashboard
+                </a>
+                {% if session.role == 'admin' %}
+                <a href="/electricians" class="sidebar-link">
+                    <i class="fa-solid fa-users"></i> Electricians
+                </a>
+                {% endif %}
+                <a href="/jobs" class="sidebar-link">
+                    <i class="fa-solid fa-briefcase"></i> Jobs
+                </a>
+                <a href="/tasks" class="sidebar-link">
+                    <i class="fa-solid fa-list-check"></i> Tasks
+                </a>
+                {% if session.role == 'admin' %}
+                <a href="/materials" class="sidebar-link">
+                    <i class="fa-solid fa-boxes-stacked"></i> Materials
+                </a>
+                <a href="/reporter" class="sidebar-link">
+                    <i class="fa-solid fa-file-contract"></i> Reports
+                </a>
+                {% endif %}
+                <a href="/payments" class="sidebar-link active">
+                    <i class="fa-solid fa-credit-card"></i> Payments
+                </a>
+                <a href="/profile" class="sidebar-link">
+                    <i class="fa-solid fa-user-gear"></i> Profile
+                </a>
+            </nav>
+        </aside>
+        
+        <main class="main-content">
+            <header class="topbar">
+                <div class="flex items-center gap-2">
+                    <button id="mobile-menu-btn" class="btn btn-outline" style="border: none; padding: 0.5rem;">
+                        <i class="fa-solid fa-bars" style="font-size: 1.25rem;"></i>
+                    </button>
+                    <h2 style="margin: 0; font-size: 1.25rem;">Payments & Transactions</h2>
+                </div>
+                <div class="topbar-right">
+                    <div class="user-profile">
+                        <img src="https://ui-avatars.com/api/?name=Admin+User&background=DBEAFE&color=1E3A8A" alt="Profile" style="width: 36px; height: 36px; border-radius: 50%;">
+                        <span>{{ session.username if session.username else 'User' }}</span>
+                    </div>
+                </div>
+            </header>
+            
+            <div class="content-area">
+                <div class="page-header" style="display: flex; justify-content: space-between; align-items: center;">
+                    <h1>Transaction History</h1>
+                    {% if payments %}
+                    <button id="clearPaymentsBtn" class="btn btn-outline" style="color: var(--danger); border-color: var(--danger);">
+                        <i class="fa-solid fa-trash-can"></i> Clear All Payments
+                    </button>
+                    {% endif %}
+                </div>
+
+                <div class="card">
+                    <div class="table-container">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Transaction ID</th>
+                                    <th>Job</th>
+                                    <th>From</th>
+                                    <th>To</th>
+                                    <th>Amount</th>
+                                    <th>Method</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for p in payments %}
+                                <tr>
+                                    <td style="font-family: monospace; font-size: 0.85rem;">{{ p.transaction_id }}</td>
+                                    <td>{{ p.job_title }}</td>
+                                    <td>{{ p.from_user }}</td>
+                                    <td>{{ p.to_user }}</td>
+                                    <td style="font-weight: bold; color: var(--success);">${{ "%.2f"|format(p.amount) }}</td>
+                                    <td><span class="badge badge-info">{{ p.payment_type }}</span></td>
+                                    <td>
+                                        <span class="badge badge-{{ 'success' if p.status == 'Completed' else 'danger' if p.status == 'Failed' else 'warning' }}">
+                                            {{ p.status }}
+                                        </span>
+                                    </td>
+                                    <td style="font-size: 0.85rem;">{{ p.created_at }}</td>
+                                </tr>
+                                {% else %}
+                                <tr>
+                                    <td colspan="8" class="text-center" style="padding: 2rem;">No transactions found.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="/static/js/script.js"></script>
+</body>
+</html>

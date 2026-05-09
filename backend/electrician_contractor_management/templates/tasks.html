@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasks - Electrician Management</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-header" style="justify-content: space-between;">
+                <div style="font-size: 0.9rem; font-weight: 700; line-height: 1.2;">AXILEX PVT LTD <br><small style="font-weight: 400; opacity: 0.8;">Contractor Management</small></div>
+                <button id="close-sidebar-btn" style="background:none; border:none; color:white; font-size:1.25rem; cursor:pointer;" class="mobile-only"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="/dashboard" class="sidebar-link">
+                    <i class="fa-solid fa-chart-line"></i> Dashboard
+                </a>
+                {% if session.role == 'admin' %}
+                <a href="/electricians" class="sidebar-link">
+                    <i class="fa-solid fa-users"></i> Electricians
+                </a>
+                {% endif %}
+                <a href="/jobs" class="sidebar-link">
+                    <i class="fa-solid fa-briefcase"></i> Jobs
+                </a>
+                <a href="/tasks" class="sidebar-link active">
+                    <i class="fa-solid fa-list-check"></i> Tasks
+                </a>
+                {% if session.role == 'admin' %}
+                <a href="/materials" class="sidebar-link">
+                    <i class="fa-solid fa-boxes-stacked"></i> Materials
+                </a>
+                <a href="/reporter" class="sidebar-link">
+                    <i class="fa-solid fa-file-contract"></i> Reports
+                </a>
+                <a href="/payments" class="sidebar-link">
+                    <i class="fa-solid fa-credit-card"></i> Payments
+                </a>
+
+                {% endif %}
+                <a href="/profile" class="sidebar-link">
+                    <i class="fa-solid fa-user-gear"></i> Profile
+                </a>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <header class="topbar">
+                <div class="flex items-center gap-2">
+                    <button id="mobile-menu-btn" class="btn btn-outline" style="border: none; padding: 0.5rem;">
+                        <i class="fa-solid fa-bars" style="font-size: 1.25rem;"></i>
+                    </button>
+                    <h2 style="margin: 0; font-size: 1.25rem;">Task Tracking</h2>
+                </div>
+                <div class="topbar-right">
+                    <div class="user-profile">
+                        <img src="https://ui-avatars.com/api/?name={{ session.username|urlencode }}&background=DBEAFE&color=1E3A8A" alt="Profile" style="width: 36px; height: 36px; border-radius: 50%;">
+                        <span>{{ session.username }}</span>
+                    </div>
+                </div>
+            </header>
+            <div class="content-area">
+                <div class="flex justify-between items-center mb-4">
+                    <div style="width: 300px;">
+                        <input type="text" class="form-control" placeholder="Search tasks...">
+                    </div>
+                    {% if session.role == 'admin' %}
+                    <button id="addTaskBtn" class="btn btn-primary"><i class="fa-solid fa-plus" style="margin-right: 0.5rem;"></i> New Task</button>
+                    {% endif %}
+                </div>
+
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Task Description</th>
+                                <th>Associated Job</th>
+                                <th>Assigned Electrician</th>
+                                <th>Progress</th>
+                                <th>Update</th>
+                                <th>Report</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for task in tasks %}
+                            <tr>
+                                <td style="font-weight: 500;">{{ task.description }}</td>
+                                <td style="color: var(--text-light);">{{ task.job_title }}</td>
+                                <td>
+                                    {% if task.electrician_name %}
+                                    <div class="flex items-center gap-1">
+                                        <img src="https://ui-avatars.com/api/?name={{ task.electrician_name|urlencode }}&background=random" style="width: 24px; height: 24px; border-radius: 50%;">
+                                        <span style="font-size: 0.875rem;">{{ task.electrician_name }}</span>
+                                    </div>
+                                    {% else %}
+                                    <span style="font-size: 0.875rem; color: var(--text-light); font-style: italic;">Unassigned</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <div style="background-color: var(--mid-grey); height: 8px; border-radius: 4px; overflow: hidden; width: 80px; display: inline-block; vertical-align: middle; margin-right: 0.5rem;">
+                                        <div style="background-color: {{ 'var(--success)' if task.status == 'Completed' else 'var(--warning)' if task.status == 'In Progress' else 'var(--danger)' }}; height: 100%; width: {{ '100%' if task.status == 'Completed' else '50%' if task.status == 'In Progress' else '10%' }};"></div>
+                                    </div>
+                                    <span style="font-size: 0.75rem; color: var(--text-light);">{{ task.status }}</span>
+                                </td>
+                                <td>
+                                    <select class="form-control status-update-btn" data-id="{{ task.id }}" style="padding: 0.25rem 0.5rem; font-size: 0.75rem; width: 120px;">
+                                        <option value="Pending" {{ 'selected' if task.status == 'Pending' }}>Pending</option>
+                                        <option value="In Progress" {{ 'selected' if task.status == 'In Progress' }}>In Progress</option>
+                                        <option value="Completed" {{ 'selected' if task.status == 'Completed' }}>Completed</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    {% if task.report_path %}
+                                    <a href="/api/uploads/{{ task.report_path }}" target="_blank" class="btn btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;"><i class="fa-solid fa-file-lines"></i> View</a>
+                                    {% else %}
+                                    <label class="btn btn-primary" style="padding: 0.25rem 0.5rem; font-size: 0.75rem; cursor: pointer;">
+                                        <i class="fa-solid fa-cloud-arrow-up"></i> Upload New
+                                        <input type="file" style="display: none;" onchange="handleFileUpload(this, 'task', {{ task.id }})">
+                                    </label>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="6" class="text-center">No tasks assigned yet.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add Task Modal -->
+    <div class="modal" id="addTaskModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create New Task</h2>
+                <button class="close-modal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="addTaskForm" method="POST" action="/tasks">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="form-label">Task Description</label>
+                        <input type="text" id="taskName" name="description" class="form-control" required placeholder="e.g. Wire pulling (Floor 1)">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Associated Job</label>
+                        <select id="taskJob" name="job_id" class="form-control" required>
+                            {% for job in jobs %}
+                            <option value="{{ job.id }}">{{ job.title }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Assignee</label>
+                        <select id="taskAssignee" name="assignee_id" class="form-control">
+                            <option value="None">Unassigned</option>
+                            {% for el in electricians %}
+                            <option value="{{ el.id }}">{{ el.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div style="margin-top: 1.5rem; display: flex; justify-content: flex-end; gap: 1rem;">
+                        <button type="button" class="btn btn-outline close-modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Create Task</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/static/js/script.js"></script>
+</body>
+</html>

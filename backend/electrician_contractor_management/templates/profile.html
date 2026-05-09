@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Electrician Management</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-header" style="justify-content: space-between;">
+                <div style="font-size: 0.9rem; font-weight: 700; line-height: 1.2;">Electrician Contractor Management System</div>
+                <button id="close-sidebar-btn" style="background:none; border:none; color:white; font-size:1.25rem; cursor:pointer;" class="mobile-only"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="/dashboard" class="sidebar-link">
+                    <i class="fa-solid fa-chart-line"></i> Dashboard
+                </a>
+                {% if session.role == 'admin' %}
+                <a href="/electricians" class="sidebar-link">
+                    <i class="fa-solid fa-users"></i> Electricians
+                </a>
+                {% endif %}
+                <a href="/jobs" class="sidebar-link">
+                    <i class="fa-solid fa-briefcase"></i> Jobs
+                </a>
+                <a href="/tasks" class="sidebar-link">
+                    <i class="fa-solid fa-list-check"></i> Tasks
+                </a>
+                {% if session.role == 'admin' %}
+                <a href="/materials" class="sidebar-link">
+                    <i class="fa-solid fa-boxes-stacked"></i> Materials
+                </a>
+                <a href="/reporter" class="sidebar-link">
+                    <i class="fa-solid fa-file-contract"></i> Reports
+                </a>
+                <a href="/payments" class="sidebar-link">
+                    <i class="fa-solid fa-credit-card"></i> Payments
+                </a>
+
+                {% endif %}
+                <a href="/profile" class="sidebar-link active">
+                    <i class="fa-solid fa-user-gear"></i> Profile
+                </a>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <header class="topbar">
+                <div class="flex items-center gap-2">
+                    <button id="mobile-menu-btn" class="btn btn-outline" style="border: none; padding: 0.5rem;">
+                        <i class="fa-solid fa-bars" style="font-size: 1.25rem;"></i>
+                    </button>
+                    <h2 style="margin: 0; font-size: 1.25rem;">Profile Settings</h2>
+                </div>
+                <div class="topbar-right">
+                    <div class="user-profile">
+                        <img src="https://ui-avatars.com/api/?name={{ session.username|urlencode }}&background=DBEAFE&color=1E3A8A" alt="Profile" style="width: 36px; height: 36px; border-radius: 50%;">
+                        <span>{{ session.username }}</span>
+                    </div>
+                </div>
+            </header>
+            <div class="content-area">
+                <div class="card" style="max-width: 600px; margin: 0 auto;">
+                    <div class="flex items-center gap-4 mb-4 pb-4" style="border-bottom: 1px solid var(--mid-grey);">
+                        <img src="https://ui-avatars.com/api/?name={{ session.username|urlencode }}&background=DBEAFE&color=1E3A8A&size=100" alt="Profile" style="width: 100px; height: 100px; border-radius: 50%;">
+                        <div>
+                            <h2 style="margin-bottom: 0.25rem;">{{ session.username }}</h2>
+                            <p style="color: var(--text-light); margin-bottom: 0.5rem;">{{ session.role|capitalize }}</p>
+                        </div>
+                    </div>
+
+                    <form id="profileForm" method="POST" action="/profile">
+                        <div class="form-group">
+                            <label class="form-label">Username</label>
+                            <input type="text" class="form-control" value="{{ session.username }}" disabled>
+                            <small class="text-light">Username cannot be changed.</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="newPassword">New Password</label>
+                            <input type="password" id="newPassword" name="password" class="form-control" placeholder="Leave blank to keep current">
+                        </div>
+
+                        <div class="flex justify-between items-center mt-4 pt-4" style="border-top: 1px solid var(--mid-grey);">
+                            <button type="submit" class="btn btn-primary">Update Password</button>
+                            <a href="/logout" class="btn btn-danger">
+                                <i class="fa-solid fa-arrow-right-from-bracket" style="margin-right: 0.5rem;"></i> Logout
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/static/js/script.js"></script>
+</body>
+</html>
